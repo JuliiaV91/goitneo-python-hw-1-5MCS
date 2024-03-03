@@ -4,24 +4,41 @@ def parse_input(user_input):
     cmd = cmd.strip().lower()
     return cmd, *args
 
+def input_error(func):
+    def inner(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except ValueError:
+            return "Give me name and phone please."
+        except KeyError:
+            return "Contact doesn`t exist."
+        except IndexError:
+            return "No contacts found."
+
+
+    return inner
+
+@input_error
 def add_contact(args, contacts):
     name, phone = args
     contacts[name] = phone
     return "Contact added."
-
+@input_error
 def username_phone (args, contacts):
     name = args[0]
     if name in contacts:
         return contacts[name]
     else:
-        return "Contact doesn't exist"
-    
+        raise KeyError
+        #return "Contact doesn't exist"
+@input_error   
 def show_all_contacts (contacts):
     if contacts:
         for name, phone in contacts.items():
             print(f"{name} - {phone}")
     else:
-        print("No contacts found.")
+        raise IndexError
+        #print("No contacts found.")
     
     
 
