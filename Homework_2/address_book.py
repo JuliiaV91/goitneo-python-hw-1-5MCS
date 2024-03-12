@@ -69,6 +69,7 @@ class AddressBook(UserDict):
 # Створення нової адресної книги
 book = AddressBook()
 
+ad
     # Створення запису для John
 john_record = Record("John")
 john_record.add_phone("1234567890")
